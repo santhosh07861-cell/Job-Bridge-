@@ -107,7 +107,9 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.remove('user-logged-out');
 
       // User is authenticated
-      if (window.location.pathname.endsWith('login.html')) {
+      const path = window.location.pathname.toLowerCase();
+      const isLoginPage = path.endsWith('login.html') || path.endsWith('/login') || path === 'login' || !!document.getElementById('loginForm');
+      if (isLoginPage) {
         window.location.replace('index.html');
         return;
       }
@@ -136,8 +138,9 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.remove('user-logged-in');
 
       // User is not authenticated
-      const securePages = ['profile.html', 'saved-jobs.html', 'settings.html'];
-      const isSecure = securePages.some(page => window.location.pathname.endsWith(page));
+      const path = window.location.pathname.toLowerCase();
+      const securePages = ['profile.html', 'saved-jobs.html', 'settings.html', 'profile', 'saved-jobs', 'settings'];
+      const isSecure = securePages.some(page => path.endsWith(page) || path.endsWith('/' + page));
       if (isSecure) {
         window.location.replace('login.html');
         return;
@@ -326,7 +329,7 @@ function setAuthLoading(isLoading) {
     if (resetBtn) resetBtn.innerHTML = `<span>Send Reset Link</span>`;
     if (googleBtn) {
       googleBtn.innerHTML = `
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" alt="Google logo">
+        <img src="assets/logos/google.svg" alt="Google logo">
         <span>Sign in with Google</span>
       `;
     }
