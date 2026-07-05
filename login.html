@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#070a14">
+    <meta name="description" content="Sign in or register to discover verified government, private IT and manufacturing careers on JobBridge.">
+    <title>Sign In & Register | JobBridge</title>
+
+    <link rel="icon" type="image/png" href="assets/logo/jobbridge-mark.png">
+    <link rel="apple-touch-icon" href="assets/logo/jobbridge-mark.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="css/login.css">
+
+    <!-- CSS Theme Detector -->
+    <script>
+      (function () {
+        var theme = localStorage.getItem('jb-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+        var cached = localStorage.getItem('jb-auth-cached') === 'true';
+        if (cached) {
+          document.documentElement.classList.add('auth-state-cached-in');
+        } else {
+          document.documentElement.classList.add('auth-state-cached-out');
+        }
+      })();
+    </script>
+
+    <!-- Import Map for Modular Firebase SDK -->
+    <script type="importmap">
+      {
+        "imports": {
+          "firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
+          "firebase/auth": "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js",
+          "firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Background glowing orbs and particles -->
+    <div class="bg-animations" aria-hidden="true">
+      <div class="bg-glow-orb bg-glow-orb-1"></div>
+      <div class="bg-glow-orb bg-glow-orb-2"></div>
+      <div class="particles-container" id="particles"></div>
+    </div>
+
+    <!-- Glassmorphic Authentication Card -->
+    <main class="auth-card" id="authCard">
+      <!-- Success/Error alert notification banner -->
+      <div class="alert-banner" id="alertBanner" role="alert" aria-live="assertive">
+        <i class="fa-solid fa-circle-info" id="alertIcon"></i>
+        <span id="alertMessage"></span>
+      </div>
+
+      <!-- Theme Switcher -->
+      <div class="theme-toggle-wrap">
+        <button class="theme-toggle-btn" id="themeToggleBtn" type="button" aria-label="Toggle theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+      </div>
+
+      <!-- JobBridge Logo & Titles -->
+      <header class="auth-header">
+        <div class="auth-logo"><img src="assets/logo/jobbridge-mark.png" class="auth-logo-img" alt="JobBridge Logo"></div>
+        <h1 id="authTitle">Welcome Back</h1>
+        <p id="authSubtitle">Sign in to continue your JobBridge journey.</p>
+      </header>
+
+      <!-- Forms Slider Section -->
+      <div class="forms-slider-wrap" id="sliderWrap">
+        <div class="forms-slider" id="formsSlider">
+          <!-- 1. LOGIN FORM -->
+          <form class="auth-form" id="loginForm" novalidate>
+            <div class="input-group">
+              <label for="loginEmail">Email Address</label>
+              <div class="input-field-wrap">
+                <input class="input-field" id="loginEmail" type="email" autocomplete="email" placeholder="name@company.com" required>
+                <i class="fa-solid fa-envelope field-icon"></i>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="loginPassword">Password</label>
+              <div class="input-field-wrap">
+                <input class="input-field" id="loginPassword" type="password" autocomplete="current-password" placeholder="••••••••" required>
+                <i class="fa-solid fa-lock field-icon"></i>
+                <button class="eye-toggle-btn" type="button" aria-label="Show password" data-toggle-password="loginPassword">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-options-row">
+              <label class="remember-me-wrap">
+                <input type="checkbox" id="rememberMe">
+                <span>Remember Me</span>
+              </label>
+              <a class="forgot-password-link" id="gotoResetBtn" href="#">Forgot Password?</a>
+            </div>
+
+            <button class="btn-primary" type="submit" id="loginSubmitBtn">
+              <span>Login</span>
+            </button>
+          </form>
+
+          <!-- 2. REGISTER FORM -->
+          <form class="auth-form" id="registerForm" novalidate>
+            <div class="input-group">
+              <label for="registerName">Full Name</label>
+              <div class="input-field-wrap">
+                <input class="input-field" id="registerName" type="text" autocomplete="name" placeholder="John Doe" required>
+                <i class="fa-solid fa-user field-icon"></i>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="registerEmail">Email Address</label>
+              <div class="input-field-wrap">
+                <input class="input-field" id="registerEmail" type="email" autocomplete="email" placeholder="name@company.com" required>
+                <i class="fa-solid fa-envelope field-icon"></i>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="registerPassword">Password</label>
+              <div class="input-field-wrap">
+                <input class="input-field" id="registerPassword" type="password" autocomplete="new-password" placeholder="At least 6 characters" required>
+                <i class="fa-solid fa-lock field-icon"></i>
+                <button class="eye-toggle-btn" type="button" aria-label="Show password" data-toggle-password="registerPassword">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="registerConfirmPassword">Confirm Password</label>
+              <div class="input-field-wrap">
+                <input class="input-field" id="registerConfirmPassword" type="password" autocomplete="new-password" placeholder="••••••••" required>
+                <i class="fa-solid fa-lock field-icon"></i>
+                <button class="eye-toggle-btn" type="button" aria-label="Show password" data-toggle-password="registerConfirmPassword">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <button class="btn-primary" type="submit" id="registerSubmitBtn">
+              <span>Create Account</span>
+            </button>
+          </form>
+
+          <!-- 3. FORGOT PASSWORD FORM -->
+          <form class="auth-form" id="resetForm" novalidate>
+            <div class="input-group">
+              <label for="resetEmail">Email Address</label>
+              <div class="input-field-wrap">
+                <input class="input-field" id="resetEmail" type="email" autocomplete="email" placeholder="name@company.com" required>
+                <i class="fa-solid fa-envelope field-icon"></i>
+              </div>
+            </div>
+
+            <button class="btn-primary" type="submit" id="resetSubmitBtn">
+              <span>Send Reset Link</span>
+            </button>
+
+            <div class="form-options-row" style="justify-content: center; margin-top: 8px;">
+              <a class="forgot-password-link" id="backToLoginBtn" href="#">Back to Login</a>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Social Provider Logins -->
+      <div id="socialLoginSection">
+        <div class="social-divider">Or</div>
+        <button class="btn-google" id="googleLoginBtn" type="button">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" alt="Google logo">
+          <span>Sign in with Google</span>
+        </button>
+      </div>
+
+      <!-- Redirect / Switch link -->
+      <footer class="auth-switch-text" id="authSwitchFooter">
+        <span id="footerPrompt">Don't have an account?</span>
+        <span class="auth-switch-link" id="authSwitchBtn">Create Account</span>
+      </footer>
+    </main>
+
+    <!-- Main Logic Module -->
+    <script type="module" src="js/auth.js"></script>
+  </body>
+</html>

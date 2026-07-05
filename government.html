@@ -1,0 +1,249 @@
+  <!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#155eef">
+    <meta name="description" content="Browse verified official government recruitment portals and career websites by category, organization and official source links.">
+    <meta name="robots" content="index, follow">
+    <title>Official Government Portal Directory | JobBridge</title>
+    <link rel="canonical" href="government.html">
+    <link rel="icon" type="image/png" href="assets/logo/jobbridge-mark.png">
+    <link rel="apple-touch-icon" href="assets/logo/jobbridge-mark.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="css/government.css?v=2.0">
+    <link rel="stylesheet" href="css/common-upgrades.css?v=2.0">
+    <script>
+      (function () {
+        var theme = localStorage.getItem('jb-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+        var cached = localStorage.getItem('jb-auth-cached') === 'true';
+        if (cached) {
+          document.documentElement.classList.add('auth-state-cached-in');
+        } else {
+          document.documentElement.classList.add('auth-state-cached-out');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#jobs">Skip to directory</a>
+
+    <header class="site-header" id="site-header">
+      <nav class="nav shell" aria-label="Primary navigation">
+        <a class="brand" href="index.html" aria-label="JobBridge home">
+          <img src="assets/logo/jobbridge-mark.png" class="brand-logo-img" alt="JobBridge Logo">
+          <span class="brand-copy">
+            <strong>JobBridge</strong>
+            <small>Official Career Discovery</small>
+          </span>
+        </a>
+
+        <button class="icon-button nav-toggle" id="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-menu">
+          <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
+
+        <div class="nav-links" id="primary-menu">
+          <a href="index.html" id="navHome">Home</a>
+          <a href="government.html" id="navGov">Government Jobs</a>
+          <a href="private-it.html" id="navIt">Private IT Jobs</a>
+          <a href="manufacturing.html" id="navMfg">Manufacturing Jobs</a>
+        </div>
+
+        <div class="nav-actions">
+          <a class="nav-cta sign-in-btn" href="login.html" id="signInBtn" style="display: none;">🔐 Sign In</a>
+          
+          <!-- User Profile Avatar and Dropdown -->
+          <div class="user-avatar-container" id="userAvatarContainer" style="display: none;">
+            <button class="user-avatar-btn" id="userAvatarBtn" type="button" aria-expanded="false" aria-haspopup="menu">
+              <span id="userAvatarLetter"></span>
+            </button>
+            <div class="user-dropdown-menu" id="userDropdownMenu" role="menu" aria-label="User menu">
+              <a href="profile.html" class="dropdown-item" role="menuitem"><i class="fa-regular fa-user"></i> My Profile</a>
+              <a href="saved-jobs.html" id="dropdownSavedBtn" role="menuitem" class="dropdown-item"><i class="fa-regular fa-bookmark"></i> Saved Jobs <span id="dropdownSavedCount" class="saved-count-badge">0</span></a>
+              <a href="settings.html" role="menuitem" class="dropdown-item"><i class="fa-solid fa-gear"></i> Settings</a>
+              <hr class="dropdown-divider">
+              <button id="dropdownLogoutBtn" role="menuitem" class="dropdown-item logout-item"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+            </div>
+          </div>
+
+          <button class="icon-button theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+            <i class="fa-solid fa-sun" aria-hidden="true"></i>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-orb hero-orb-one" aria-hidden="true"></div>
+        <div class="hero-orb hero-orb-two" aria-hidden="true"></div>
+        <div class="shell hero-content">
+          <div class="hero-copy">
+            <div class="eyebrow"><span></span> Verified official government portals</div>
+            <h1>Government Portal <em>Directory</em></h1>
+            <p>Browse Central, State, Banking, Railway, SSC, UPSC, Defence, Police, Teaching and PSU recruitment portals directly from official sources.</p>
+
+            <form class="hero-search" id="hero-search" role="search">
+              <label class="search-field" for="hero-search-input">
+                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                <span class="sr-only">Search official government portals</span>
+                <input id="hero-search-input" type="search" autocomplete="off" placeholder="Organization, category, portal or qualification">
+              </label>
+              <button class="button button-primary" type="submit">Search portals <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+            </form>
+
+            <div class="category-pills" id="hero-categories" aria-label="Popular categories"></div>
+
+            <div class="hero-actions">
+              <button class="button button-soft" id="browse-jobs-button" type="button"><i class="fa-solid fa-compass" aria-hidden="true"></i> Browse directory</button>
+              <button class="button button-ghost" id="notification-button" type="button"><i class="fa-solid fa-landmark" aria-hidden="true"></i> Official resources</button>
+            </div>
+          </div>
+
+          <aside class="hero-panel glass-card" aria-label="Official portal directory overview">
+            <div class="live-label"><span></span> Official source directory</div>
+            <div class="live-count">
+              <strong id="live-job-count" data-counter="0">0</strong>
+              <span>verified portals</span>
+            </div>
+            <div class="hero-stat-grid">
+              <div><i class="fa-solid fa-building-columns"></i><strong id="department-count">0</strong><span>Organizations</span></div>
+              <div><i class="fa-solid fa-link"></i><strong id="official-link-count">0</strong><span>Official links</span></div>
+              <div><i class="fa-solid fa-circle-check"></i><strong>100%</strong><span>Official links</span></div>
+            </div>
+            <div class="hero-trending">
+              <div class="section-mini-title"><span>Frequently used</span><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+              <div id="hero-trending-list"></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="featured-section shell" id="featured" aria-labelledby="featured-title">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Official source picks</span>
+            <h2 id="featured-title">Featured Portals</h2>
+          </div>
+          <div class="carousel-controls">
+            <button class="icon-button" id="featured-prev" type="button" aria-label="Previous featured portals"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="icon-button" id="featured-next" type="button" aria-label="Next featured portals"><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+        </div>
+        <div class="featured-track" id="featured-track" aria-live="polite"></div>
+      </section>
+
+      <section class="portal shell" aria-label="Official government portal directory">
+        <aside class="left-sidebar sidebar-card">
+          <div class="sidebar-heading"><span>Explore</span><button class="icon-button sidebar-close" id="sidebar-close" aria-label="Close filters"><i class="fa-solid fa-xmark"></i></button></div>
+          <nav class="sidebar-nav" aria-label="Directory views">
+            <button class="active" type="button" data-view="all"><i class="fa-solid fa-border-all"></i><span>All Categories</span><b id="all-count">0</b></button>
+            <button type="button" data-view="saved"><i class="fa-regular fa-bookmark"></i><span>Saved Portals</span><b id="sidebar-saved-count">0</b></button>
+          </nav>
+          <div class="sidebar-divider"></div>
+          <h3>Categories</h3>
+          <div class="category-filter-list" id="category-filter-list"></div>
+          <div class="sidebar-divider"></div>
+          <h3>Official resources</h3>
+          <div class="important-links">
+            <a href="https://www.india.gov.in/" target="_blank" rel="noopener noreferrer">National Portal of India <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            <a href="https://www.ncs.gov.in/" target="_blank" rel="noopener noreferrer">National Career Service <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            <a href="https://employmentnews.gov.in/" target="_blank" rel="noopener noreferrer">Employment News <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+          </div>
+        </aside>
+
+        <section class="job-feed" id="jobs" aria-labelledby="jobs-title">
+          <div class="feed-toolbar">
+            <div>
+              <button class="filter-mobile-button button button-soft" id="filter-mobile-button" type="button"><i class="fa-solid fa-sliders"></i> Filters</button>
+              <span class="results-copy"><strong id="results-count">0</strong> official portals found</span>
+            </div>
+            <label class="sort-control">Sort by
+              <select id="sort-select">
+                <option value="priority">Recommended</option>
+                <option value="az">A to Z</option>
+                <option value="category">Category</option>
+              </select>
+            </label>
+          </div>
+          <button class="button button-ghost clear-filters-mobile" id="clear-filters-mobile" type="button" style="display: none;"><i class="fa-solid fa-rotate-left"></i> Clear Active Filters</button>
+
+          <div class="directory-heading">
+            <span class="section-kicker">Category to organization to official links</span>
+            <h2 id="jobs-title">Official Government Portal Directory</h2>
+          </div>
+          <div class="active-filters" id="active-filters" aria-live="polite"></div>
+          <div class="job-list" id="job-list" aria-live="polite">
+            <div class="job-skeleton"></div><div class="job-skeleton"></div><div class="job-skeleton"></div>
+          </div>
+          <div class="empty-state" id="empty-state" hidden>
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <h3>No matching official portals</h3>
+            <p>Try a broader search or clear the selected filters.</p>
+            <button class="button button-primary" id="clear-filters-button" type="button">Clear filters</button>
+          </div>
+          <div class="pagination" id="pagination" aria-label="Directory result pages"></div>
+          <button class="button button-soft load-more-button" id="load-more-button" type="button" hidden>Load more portals</button>
+        </section>
+
+        <aside class="right-sidebar">
+          <section class="widget resource-widget" id="official-resources">
+            <div class="widget-title"><div><span class="section-kicker">Official access</span><h2>Official Government Resources</h2></div><i class="fa-solid fa-landmark"></i></div>
+            <div class="resource-links" id="resource-links"></div>
+          </section>
+        </aside>
+      </section>
+    </main>
+
+    <footer>
+      <div class="shell footer-content">
+        <div><a class="brand" href="index.html"><span>JobBridge</span></a><p>Connecting candidates to verified official government recruitment portals.</p></div>
+        <div><strong>Disclaimer</strong><p>JobBridge only provides verified official government recruitment portal links. Users must verify all information on the respective official websites.</p></div>
+        <div><strong>Quick links</strong><a href="#jobs">Official directory</a><a href="#official-resources">Government resources</a></div>
+      </div>
+      <div class="shell footer-bottom">© JobBridge. Official sources, clearer portals.</div>
+    </footer>
+
+    <dialog class="job-modal" id="job-modal" aria-labelledby="modal-title">
+      <div class="modal-header">
+        <div class="modal-brand" id="modal-icon"></div>
+        <div><span class="official-badge"><i class="fa-solid fa-circle-check"></i> Official Source</span><h2 id="modal-title"></h2><p id="modal-department"></p></div>
+        <button class="icon-button modal-close" id="modal-close" type="button" aria-label="Close details"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-actions">
+        <button class="button button-ghost" id="modal-copy" type="button"><i class="fa-regular fa-copy"></i> Copy link</button>
+        <button class="button button-soft" id="modal-share" type="button"><i class="fa-solid fa-share-nodes"></i> Share</button>
+        <a class="button button-primary" id="modal-apply" target="_blank" rel="noopener noreferrer">Visit Official Portal <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
+    </dialog>
+
+    <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+      <a href="index.html"><i class="fa-solid fa-house" aria-hidden="true"></i><span>Home</span></a>
+      <a class="active" href="government.html" aria-current="page"><i class="fa-solid fa-landmark" aria-hidden="true"></i><span>Government Jobs</span></a>
+      <button id="bottom-categories" type="button"><i class="fa-solid fa-folder-open" aria-hidden="true"></i><span>Categories</span></button>
+      <a id="bottom-saved" href="saved-jobs.html"><i class="fa-regular fa-bookmark" aria-hidden="true"></i><span>Saved</span></a>
+    </nav>
+    <button class="back-to-top icon-button" id="back-to-top" type="button" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+    <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+    <!-- Import Map for Modular Firebase SDK -->
+    <script type="importmap">
+      {
+        "imports": {
+          "firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
+          "firebase/auth": "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js",
+          "firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
+        }
+      }
+    </script>
+    <script type="module" src="js/saved-jobs-db.js"></script>
+    <script type="module" src="js/auth.js"></script>
+    <script src="js/government.js?v=1.2" defer></script>
+  </body>
+</html>

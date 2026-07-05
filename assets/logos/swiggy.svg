@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 72" role="img" aria-label="Swiggy logo">
+  <rect width="230" height="72" fill="none"/>
+  <path d="M41 8c16 0 27 12 27 28 0 19-27 30-27 30S14 55 14 36C14 20 25 8 41 8zm0 16a12 12 0 1 0 0 24 12 12 0 0 0 0-24z" fill="#fc8019"/>
+  <text x="82" y="46" fill="#fc8019" font-family="Arial, Helvetica, sans-serif" font-size="36" font-weight="800">Swiggy</text>
+</svg>

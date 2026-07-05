@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#070a14">
+    <meta name="description" content="Find government, IT and manufacturing opportunities from verified official career portals.">
+    <title>JobBridge | Official Jobs From Verified Sources</title>
+    <link rel="icon" type="image/png" href="assets/logo/jobbridge-mark.png">
+    <link rel="apple-touch-icon" href="assets/logo/jobbridge-mark.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="css/style.css?v=2.0">
+    <link rel="stylesheet" href="css/common-upgrades.css?v=2.0">
+    <!-- Import Map for Modular Firebase SDK -->
+    <script type="importmap">
+      {
+        "imports": {
+          "firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
+          "firebase/auth": "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js",
+          "firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
+        }
+      }
+    </script>
+    <script>
+      (function () {
+        var theme = localStorage.getItem('jb-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+        var cached = localStorage.getItem('jb-auth-cached') === 'true';
+        if (cached) {
+          document.documentElement.classList.add('auth-state-cached-in');
+        } else {
+          document.documentElement.classList.add('auth-state-cached-out');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="page-transition" aria-hidden="true"></div>
+
+    <section class="splash" id="splash-screen" aria-label="JobBridge loading screen">
+      <div class="splash-content">
+        <div class="splash-logo-container">
+          <img src="assets/logo/jobbridge-mark.png" alt="JobBridge Logo" class="splash-logo-img">
+        </div>
+        <div class="splash-tagline">
+          <span>Official Jobs</span>
+          <span class="dot">•</span>
+          <span>Verified Sources</span>
+          <span class="dot">•</span>
+          <span>Trusted Careers</span>
+        </div>
+      </div>
+    </section>
+
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="nav-backdrop" id="nav-backdrop" hidden></div>
+    <header class="site-header" id="site-header">
+      <nav class="nav shell" aria-label="Primary navigation">
+        <a class="brand" href="index.html" aria-label="JobBridge home">
+          <img src="assets/logo/jobbridge-mark.png" class="brand-logo-img" alt="JobBridge Logo">
+          <span class="brand-copy">
+            <strong>JobBridge</strong>
+            <small>Official Career Discovery</small>
+          </span>
+        </a>
+
+        <button class="icon-button nav-toggle" id="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-menu">
+          <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
+
+        <div class="nav-links" id="primary-menu">
+          <a href="index.html" id="navHome">Home</a>
+          <a href="government.html" id="navGov">Government Jobs</a>
+          <a href="private-it.html" id="navIt">Private IT Jobs</a>
+          <a href="manufacturing.html" id="navMfg">Manufacturing Jobs</a>
+        </div>
+
+        <div class="nav-actions">
+          <a class="nav-cta" href="#categories">Explore</a>
+          <a class="nav-cta sign-in-btn" href="login.html" id="signInBtn" style="display: none;">🔐 Sign In</a>
+          
+          <!-- User Profile Avatar and Dropdown -->
+          <div class="user-avatar-container" id="userAvatarContainer" style="display: none;">
+            <button class="user-avatar-btn" id="userAvatarBtn" type="button" aria-expanded="false" aria-haspopup="menu">
+              <span id="userAvatarLetter"></span>
+            </button>
+            <div class="user-dropdown-menu" id="userDropdownMenu" role="menu" aria-label="User menu">
+              <a href="profile.html" class="dropdown-item" role="menuitem"><i class="fa-regular fa-user"></i> My Profile</a>
+              <a href="saved-jobs.html" id="dropdownSavedBtn" role="menuitem" class="dropdown-item"><i class="fa-regular fa-bookmark"></i> Saved Jobs <span id="dropdownSavedCount" class="saved-count-badge">0</span></a>
+              <a href="settings.html" role="menuitem" class="dropdown-item"><i class="fa-solid fa-gear"></i> Settings</a>
+              <hr class="dropdown-divider">
+              <button id="dropdownLogoutBtn" role="menuitem" class="dropdown-item logout-item"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+            </div>
+          </div>
+
+          <button class="icon-button theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+            <i class="fa-solid fa-sun" aria-hidden="true"></i>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero section" id="home">
+        <div class="particles" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="shell hero-grid">
+          <div class="hero-copy reveal">
+            <p class="eyebrow"><span></span> Verified career discovery</p>
+            <h1 class="hero-title">
+  Find Your Dream Career From Official Sources
+</h1>
+            <p class="hero-subtitle">Explore Government, IT and Manufacturing opportunities from verified career portals.</p>
+
+            <ul class="trust-points" aria-label="JobBridge benefits">
+              <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i>Verified Sources</li>
+              <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i>Official Career Links</li>
+              <li><i class="fa-solid fa-circle-check" aria-hidden="true"></i>Daily Updates</li>
+            </ul>
+
+            <form class="hero-search glass" id="hero-search" role="search">
+              <label for="search-input" class="search-input-wrap">
+                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                <span class="sr-only">Search official jobs</span>
+                <input id="search-input" type="search" autocomplete="off" placeholder="Search role, company, source, skill or location">
+              </label>
+              <select id="filter-select" aria-label="Filter by category">
+                <option value="all">All categories</option>
+                <option value="government">Government</option>
+                <option value="it">Private IT</option>
+                <option value="manufacturing">Manufacturing</option>
+              </select>
+              <button class="button button-primary shine" type="submit">Search <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+            </form>
+
+            <div class="hero-actions">
+              <a class="button button-soft" href="#categories"><i class="fa-solid fa-table-cells-large" aria-hidden="true"></i>Browse categories</a>
+              <a class="button button-ghost" href="#trust"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i>How we verify</a>
+            </div>
+          </div>
+
+          <div class="hero-services glass reveal">
+            <div class="services-header">
+              <span class="eyebrow"><span></span> Essential Citizen Services</span>
+            </div>
+            <div class="services-grid">
+              <a href="https://uidai.gov.in/" target="_blank" class="service-block">
+                <i class="fa-solid fa-id-card"></i>
+                <span>Aadhaar Card</span>
+              </a>
+              <a href="https://www.incometax.gov.in/" target="_blank" class="service-block">
+                <i class="fa-solid fa-address-card"></i>
+                <span>PAN Card</span>
+              </a>
+              <a href="https://www.passportindia.gov.in/" target="_blank" class="service-block">
+                <i class="fa-solid fa-passport"></i>
+                <span>Passport Seva</span>
+              </a>
+              <a href="https://voters.eci.gov.in/" target="_blank" class="service-block">
+                <i class="fa-solid fa-check-to-slot"></i>
+                <span>Voter ID</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+  
+
+
+      <section class="section categories-section" id="categories" aria-labelledby="categories-title">
+        <div class="shell">
+          <div class="section-heading reveal">
+            <div>
+              <p class="kicker">Choose a career lane</p>
+              <h2 id="categories-title">Explore verified categories</h2>
+            </div>
+            <p>Every card opens a working destination with searchable official listings.</p>
+          </div>
+
+          <div class="category-grid stagger">
+            <article class="category-card glass reveal" data-category="government" data-page="government.html">
+              <div class="category-icon gov"><i class="fa-solid fa-building-columns"></i></div>
+              <p class="category-kicker">Public sector</p>
+              <h3>Government Jobs</h3>
+              <p>Central, State, Banking, Railway, Defence and PSU opportunities from official portals.</p>
+              <div class="category-meta"><span data-count="government">0 listings</span><span>Official notices</span></div>
+              <a class="button button-card shine" href="government.html">Explore Government <i class="fa-solid fa-arrow-right"></i></a>
+            </article>
+
+            <article class="category-card glass reveal" data-category="it" data-page="private-it.html">
+              <div class="category-icon it"><i class="fa-solid fa-code"></i></div>
+              <p class="category-kicker">Technology</p>
+              <h3>Private IT Jobs</h3>
+              <p>Software, cloud, AI, data, security and platform roles from verified company careers.</p>
+              <div class="category-meta"><span data-count="it">0 listings</span><span>Career portals</span></div>
+              <a class="button button-card shine" href="private-it.html">Explore IT <i class="fa-solid fa-arrow-right"></i></a>
+            </article>
+
+            <article class="category-card glass reveal" data-category="manufacturing" data-page="manufacturing.html">
+              <div class="category-icon manu"><i class="fa-solid fa-gears"></i></div>
+              <p class="category-kicker">Core engineering</p>
+              <h3>Manufacturing Jobs</h3>
+              <p>Mechanical, electrical, industrial and technician roles from official company portals.</p>
+              <div class="category-meta"><span data-count="manufacturing">0 listings</span><span>Direct links</span></div>
+              <a class="button button-card shine" href="manufacturing.html">Explore Manufacturing <i class="fa-solid fa-arrow-right"></i></a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+
+      <section class="section results-section" id="results" aria-labelledby="results-title">
+        <div class="shell">
+          <div class="section-heading reveal">
+            <div>
+              <p class="kicker">Search results</p>
+              <h2 id="results-title">Featured Official Opportunities</h2>
+            </div>
+            <p id="results-summary">Showing fresh verified listings from all categories.</p>
+          </div>
+          <div class="filter-tabs reveal" id="category-tabs" aria-label="Category filters">
+            <button class="active" type="button" data-filter="all">All</button>
+            <button type="button" data-filter="government">Government</button>
+            <button type="button" data-filter="it">Private IT</button>
+            <button type="button" data-filter="manufacturing">Manufacturing</button>
+          </div>
+          <div class="opportunity-grid stagger" id="opportunity-grid" aria-live="polite"></div>
+          <div class="empty-state glass" id="empty-state" hidden>
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <h3>No matching official listings</h3>
+            <p>Try a broader keyword or switch to all categories.</p>
+            <button class="button button-primary" id="clear-search" type="button">Clear search</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section trust-section" id="trust" aria-labelledby="trust-title">
+        <div class="shell trust-banner reveal">
+          <div>
+            <p class="kicker">Transparent by design</p>
+            <h2 id="trust-title">JobBridge provides official career portal links only.</h2>
+            <p>We do not collect applications, charge fees, or act as a recruiter. All applications are completed through official government and company career websites.</p>
+          </div>
+          <div class="trust-list">
+            <span><i class="fa-solid fa-circle-check"></i>Verified Links</span>
+            <span><i class="fa-solid fa-circle-check"></i>Official Sources</span>
+            <span><i class="fa-solid fa-circle-check"></i>Secure Navigation</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section faq-section" id="faq" aria-labelledby="faq-title">
+        <div class="shell faq-layout">
+          <div class="section-heading vertical reveal">
+            <p class="kicker">Questions</p>
+            <h2 id="faq-title">Frequently Asked Questions</h2>
+            <p>Built for direct, verified discovery without application middlemen.</p>
+          </div>
+          <div class="faq-list reveal" id="faq-list">
+            <article class="faq-item open">
+              <button type="button" aria-expanded="true">
+                <span><i class="fa-solid fa-paper-plane"></i>Can I apply directly on JobBridge?</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+              <div class="faq-panel"><p>No. JobBridge sends you to the official government or company career portal where the application is completed.</p></div>
+            </article>
+            <article class="faq-item">
+              <button type="button" aria-expanded="false">
+                <span><i class="fa-solid fa-shield-halved"></i>How are links verified?</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+              <div class="faq-panel"><p>Listings are loaded from curated data files that store official recruitment or career URLs, then displayed with direct outbound application links.</p></div>
+            </article>
+            <article class="faq-item">
+              <button type="button" aria-expanded="false">
+                <span><i class="fa-solid fa-wallet"></i>Does JobBridge charge fees?</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+              <div class="faq-panel"><p>No. JobBridge is a discovery interface. It does not collect fees, documents, or applications.</p></div>
+            </article>
+            <article class="faq-item">
+              <button type="button" aria-expanded="false">
+                <span><i class="fa-solid fa-sliders"></i>Do search and filters work?</span>
+                <i class="fa-solid fa-chevron-down"></i>
+              </button>
+              <div class="faq-panel"><p>Yes. Homepage search filters real data across Government, Private IT and Manufacturing listings.</p></div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-grid">
+        <div>
+          <a class="brand" href="index.html"><img src="assets/logo/jobbridge-mark.png" class="brand-logo-img" alt="JobBridge Logo"><span class="brand-copy">JobBridge</span></a>
+          <p>Official sources. Verified links. Trusted career navigation.</p>
+        </div>
+        <nav aria-label="Footer links">
+          <a href="government.html">Government</a>
+          <a href="private-it.html">Private IT</a>
+          <a href="manufacturing.html">Manufacturing</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+      </div>
+      <div class="shell footer-bottom">© <span id="year"></span> JobBridge. All applications happen on official portals.</div>
+    </footer>
+
+    <script src="js/script.js" defer></script>
+    <script type="module" src="js/saved-jobs-db.js"></script>
+    <script type="module" src="js/auth.js"></script>
+  </body>
+</html>

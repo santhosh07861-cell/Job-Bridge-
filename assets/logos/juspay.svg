@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 230 72" role="img" aria-label="Juspay logo">
+  <rect width="230" height="72" fill="none"/>
+  <rect x="16" y="14" width="50" height="44" rx="12" fill="#111827"/>
+  <path d="M34 24h17v18c0 9-6 14-15 14-5 0-9-1-12-4l5-9c2 2 4 3 7 3s5-2 5-5V34h-7z" fill="#fff"/>
+  <text x="82" y="45" fill="#111827" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800">Juspay</text>
+</svg>

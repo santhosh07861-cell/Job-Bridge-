@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Manufacturing Jobs — JobBridge</title>
+    <link rel="icon" type="image/png" href="assets/logo/jobbridge-mark.png">
+    <link rel="apple-touch-icon" href="assets/logo/jobbridge-mark.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="css/manufacturing.css?v=2.0">
+    <link rel="stylesheet" href="css/common-upgrades.css?v=2.0">
+    <script>
+      (function () {
+        var theme = localStorage.getItem('jb-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+        var cached = localStorage.getItem('jb-auth-cached') === 'true';
+        if (cached) {
+          document.documentElement.classList.add('auth-state-cached-in');
+        } else {
+          document.documentElement.classList.add('auth-state-cached-out');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="site-header" id="site-header">
+      <nav class="nav shell" aria-label="Primary navigation">
+        <a class="brand" href="index.html" aria-label="JobBridge home">
+          <img src="assets/logo/jobbridge-mark.png" class="brand-logo-img" alt="JobBridge Logo">
+          <span class="brand-copy">
+            <strong>JobBridge</strong>
+            <small>Official Career Discovery</small>
+          </span>
+        </a>
+
+        <button class="icon-button nav-toggle" id="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="primary-menu">
+          <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
+
+        <div class="nav-links" id="primary-menu">
+          <a href="index.html" id="navHome">Home</a>
+          <a href="government.html" id="navGov">Government Jobs</a>
+          <a href="private-it.html" id="navIt">Private IT Jobs</a>
+          <a href="manufacturing.html" id="navMfg">Manufacturing Jobs</a>
+        </div>
+
+        <div class="nav-actions">
+          <a class="nav-cta sign-in-btn" href="login.html" id="signInBtn" style="display: none;">🔐 Sign In</a>
+          
+          <!-- User Profile Avatar and Dropdown -->
+          <div class="user-avatar-container" id="userAvatarContainer" style="display: none;">
+            <button class="user-avatar-btn" id="userAvatarBtn" type="button" aria-expanded="false" aria-haspopup="menu">
+              <span id="userAvatarLetter"></span>
+            </button>
+            <div class="user-dropdown-menu" id="userDropdownMenu" role="menu" aria-label="User menu">
+              <a href="profile.html" class="dropdown-item" role="menuitem"><i class="fa-regular fa-user"></i> My Profile</a>
+              <a href="saved-jobs.html" id="dropdownSavedBtn" role="menuitem" class="dropdown-item"><i class="fa-regular fa-bookmark"></i> Saved Jobs <span id="dropdownSavedCount" class="saved-count-badge">0</span></a>
+              <a href="settings.html" role="menuitem" class="dropdown-item"><i class="fa-solid fa-gear"></i> Settings</a>
+              <hr class="dropdown-divider">
+              <button id="dropdownLogoutBtn" role="menuitem" class="dropdown-item logout-item"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+            </div>
+          </div>
+
+          <button class="icon-button theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+            <i class="fa-solid fa-sun" aria-hidden="true"></i>
+          </button>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section class="hero">
+          <div class="shell hero-content">
+            <div class="hero-copy">
+              <div class="eyebrow"><span></span> Verified Manufacturing Opportunities</div>
+              <h1 class="hero-heading">Manufacturing Jobs <span class="grad-text">for Engineers &amp; Technicians</span></h1>
+              <p>Discover verified engineering and manufacturing roles from leading companies across India.</p>
+
+              <form class="hero-search" id="manu-search" role="search">
+                <label class="search-field" for="manu-search-input">
+                  <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                  <span class="sr-only">Search manufacturing jobs</span>
+                  <input id="manu-search-input" type="search" autocomplete="off" placeholder="Search job titles, companies or branches">
+                </label>
+                <button class="button button-primary" type="submit">Search jobs <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+              </form>
+
+              <div class="category-pills" id="hero-categories" aria-label="Popular categories"></div>
+            </div>
+          
+            <!-- simplified professional hero (insights removed) -->
+          </div>
+        </section>
+
+        <section class="portal shell" aria-label="Manufacturing jobs portal">
+          <aside class="left-sidebar sidebar-card" id="manu-sidebar">
+            <div class="sidebar-heading">
+              <span>Filters</span>
+              <div style="display:flex;gap:8px;align-items:center">
+                <button id="manu-clear-sidebar" class="button-ghost" type="button" aria-label="Clear filters">Clear</button>
+                <button class="icon-button sidebar-close" id="sidebar-close" aria-label="Close filters">✕</button>
+              </div>
+            </div>
+
+            <!-- sidebar search removed; use hero search above -->
+
+            <div class="sidebar-section collapsible" id="filter-branch">
+              <button class="collapsible-toggle" data-target="filter-branch-pills"><strong>Branch</strong><span class="chev">▾</span></button>
+              <div class="filter-pills" id="filter-branch-pills" aria-hidden="false"></div>
+            </div>
+
+            <div class="sidebar-section collapsible" id="filter-exp">
+              <button class="collapsible-toggle" data-target="filter-exp-pills"><strong>Experience</strong><span class="chev">▾</span></button>
+              <div class="filter-pills" id="filter-exp-pills" aria-hidden="false"></div>
+            </div>
+
+            <div class="sidebar-section collapsible" id="filter-type">
+              <button class="collapsible-toggle" data-target="filter-type-pills"><strong>Job Type</strong><span class="chev">▾</span></button>
+              <div class="filter-pills" id="filter-type-pills" aria-hidden="false"></div>
+            </div>
+
+            <div class="sidebar-section collapsible" id="filter-workmode">
+              <button class="collapsible-toggle" data-target="filter-workmode-pills"><strong>Work Mode</strong><span class="chev">▾</span></button>
+              <div class="filter-pills" id="filter-workmode-pills" aria-hidden="false"></div>
+            </div>
+
+            <!-- Skills filter removed as requested -->
+
+            <div class="sidebar-actions">
+              <button id="applyFiltersBtn" class="button button-primary drawer-apply" type="button">Apply Filters</button>
+            </div>
+          </aside>
+
+          <section class="job-feed" id="manu-jobs" aria-labelledby="jobs-title">
+              <div class="feed-toolbar">
+              <div>
+                <span class="results-copy"><strong id="manu-result-count">0</strong> opportunities found</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <button id="openFiltersBtn" class="button button-ghost mobile-only" type="button" aria-label="Open filters"><i class="fa-solid fa-sliders" aria-hidden="true"></i> Filters</button>
+                <label class="sort-control">Sort by
+                  <select id="manu-sort" aria-label="Sort results"><option value="relevance">Relevance</option><option value="latest">Latest</option><option value="oldest">Oldest</option><option value="company">Company A-Z</option><option value="experience">Experience</option></select>
+                </label>
+                <button id="manu-clear" class="button button-ghost" type="button">Clear filters</button>
+              </div>
+            </div>
+
+            <div class="active-filters" id="manu-active-filters" aria-live="polite"></div>
+            <div class="job-list" id="manu-list" aria-live="polite"></div>
+            <div class="pagination" id="manu-pagination"><button id="manu-loadmore" class="button button-soft">Load More Jobs</button><p id="manu-end-message" class="end-message" hidden>You've reached the end.</p></div>
+          </section>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">JobBridge shows discovery listings only. Always apply through the official company career portal.</div>
+    </footer>
+
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+      <a href="index.html"><i class="fa-solid fa-house" aria-hidden="true"></i><span>Home</span></a>
+      <a class="active" href="manufacturing.html" aria-current="page"><i class="fa-solid fa-industry" aria-hidden="true"></i><span>Manufacturing Jobs</span></a>
+      <button id="bottomFilters" type="button"><i class="fa-solid fa-gear" aria-hidden="true"></i><span>Filters</span></button>
+      <a id="bottomSaved" href="saved-jobs.html"><i class="fa-regular fa-bookmark" aria-hidden="true"></i><span>Saved</span></a>
+    </nav>
+    <dialog class="drawer" id="savedDialog" aria-label="Saved jobs">
+      <button class="icon-btn drawer-close" id="closeSaved" type="button" aria-label="Close saved jobs"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+      <div id="savedContent"></div>
+    </dialog>
+    <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+    <!-- Import Map for Modular Firebase SDK -->
+    <script type="importmap">
+      {
+        "imports": {
+          "firebase/app": "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js",
+          "firebase/auth": "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js",
+          "firebase/firestore": "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
+        }
+      }
+    </script>
+    <script type="module" src="js/saved-jobs-db.js"></script>
+    <script type="module" src="js/auth.js"></script>
+    <script src="js/manufacturing.js" defer></script>
+  </body>
+</html>

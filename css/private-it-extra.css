@@ -1,0 +1,156 @@
+.company-card .bookmark-button,
+.job-card .bookmark-button {
+  position: absolute !important;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--glass, rgba(255, 255, 255, 0.04));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--muted, #94a3b8);
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease, background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.company-card .bookmark-button i,
+.job-card .bookmark-button i {
+  font-size: 15px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.company-card {
+  position: relative !important;
+}
+
+.company-card .bookmark-button {
+  top: 16px !important;
+  right: 12px !important;
+}
+
+.job-card .bookmark-button {
+  top: 16px !important;
+  right: 16px !important;
+}
+
+/* Tooltip container */
+.company-card .bookmark-button[data-tooltip],
+.job-card .bookmark-button[data-tooltip] {
+  position: relative;
+}
+
+/* Tooltip style */
+.company-card .bookmark-button::after,
+.job-card .bookmark-button::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px) scale(0.85);
+  background: rgba(15, 23, 42, 0.95);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 20;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.company-card .bookmark-button:hover::after,
+.job-card .bookmark-button:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-6px) scale(1);
+}
+
+/* Hover effect */
+.company-card .bookmark-button:hover,
+.job-card .bookmark-button:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--brand, #155eef);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(21, 94, 239, 0.15);
+}
+
+/* Active/Saved state */
+.company-card .bookmark-button.saved,
+.job-card .bookmark-button.saved {
+  background: rgba(21, 94, 239, 0.14);
+  color: var(--brand, #155eef);
+  border-color: rgba(21, 94, 239, 0.4);
+  box-shadow: 0 4px 16px rgba(21, 94, 239, 0.25);
+}
+
+/* Click scale down */
+.company-card .bookmark-button:active,
+.job-card .bookmark-button:active {
+  transform: scale(0.9);
+}
+
+/* Heart/bookmark pop animation */
+@keyframes bookmarkPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+.bookmark-button.pop i {
+  animation: bookmarkPop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Focus indicator for keyboard accessibility */
+.bookmark-button:focus-visible {
+  box-shadow: 0 0 0 3px rgba(21, 94, 239, 0.4);
+  border-color: var(--brand, #155eef);
+}
+
+/* Adjustments to prevent overlaps on desktop */
+@media (min-width: 769px) {
+  .job-card {
+    position: relative;
+    padding-right: 60px !important;
+  }
+}
+
+/* Adjustments to prevent overlaps on mobile */
+@media (max-width: 768px) {
+  .job-card {
+    position: relative;
+  }
+  .job-copy {
+    padding-right: 40px !important;
+  }
+  .company-card {
+    position: relative;
+  }
+  .nav-actions .saved-button {
+    display: none !important;
+  }
+}
+
+/* Hero Header Responsiveness Override */
+@media (max-width: 768px) {
+  .hero h1, 
+  main h1,
+  h1 {
+    font-size: 26px !important;
+    font-size: clamp(1.5rem, 7.5vw, 2.2rem) !important;
+    margin: 12px 0 8px !important;
+    line-height: 1.15 !important;
+  }
+  .hero-sub {
+    font-size: 14px !important;
+    margin: 0 0 16px !important;
+  }
+}
