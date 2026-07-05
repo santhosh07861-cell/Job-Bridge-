@@ -4,5 +4,19 @@ service cloud.firestore {
     match /users/{userId}/savedJobs/{jobId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
+    
+    // Jobs collections (Read-only for users, write-only/write-allowed for admin/dev seeding)
+    match /government_jobs/{document=**} {
+      allow read: if true;
+      allow write: if true;
+    }
+    match /it_jobs/{document=**} {
+      allow read: if true;
+      allow write: if true;
+    }
+    match /manufacturing_jobs/{document=**} {
+      allow read: if true;
+      allow write: if true;
+    }
   }
 }

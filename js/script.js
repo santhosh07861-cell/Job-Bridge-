@@ -1,11 +1,8 @@
+import { getGovernmentJobs, getItJobs, getManufacturingJobs } from './jobs-db.js';
+
 document.addEventListener('DOMContentLoaded', () => {
   const THEME_KEY = 'jb-theme';
   const SPLASH_KEY = 'jb-splash-seen';
-  const DATA_FILES = {
-    government: 'data/government-jobs.json',
-    it: 'data/private-it-jobs.json',
-    manufacturing: 'data/manufacturing-jobs.json'
-  };
 
   const state = {
     theme: localStorage.getItem(THEME_KEY) || 'dark',
@@ -186,17 +183,22 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function loadAllData() {
-    const entries = await Promise.all(Object.entries(DATA_FILES).map(async ([category, url]) => {
-      try {
-        const raw = await fetchWithCache(url, `jb-cache-${category}`);
-        return normalizeData(category, raw);
-      } catch (error) {
-        console.error(`Failed to load ${category} data`, error);
-        return [];
-      }
-    }));
-
-    state.jobs = entries.flat();
+    try {
+      const [govRaw, itRaw, mfgRaw] = await Promise.all([
+        getGovernmentJobs(),
+        getItJobs(),
+        getManufacturingJobs()
+      ]);
+      
+      state.jobs = [
+        ...normalizeData('government', govRaw),
+        ...normalizeData('it', itRaw),
+        ...normalizeData('manufacturing', mfgRaw)
+      ];
+    } catch (error) {
+      console.error('Failed to load job data from database:', error);
+      state.jobs = [];
+    }
   }
 
   function normalizeData(category, raw) {

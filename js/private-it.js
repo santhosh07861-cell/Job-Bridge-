@@ -1,5 +1,6 @@
+import { getItJobs } from './jobs-db.js';
+
 (() => {
-  const DATA_URL = 'data/private-it-jobs.json';
   const PAGE_SIZE = 12;
   const COMPANY_PAGE_SIZE = 8;
 
@@ -106,7 +107,7 @@
 
   async function loadDirectoryData() {
     try {
-      const data = await fetchWithCache(DATA_URL, 'jb-cache-private-it');
+      const data = await getItJobs();
       const rows = Array.isArray(data) ? data : data.jobs || [];
       state.entries = rows.map(normalizeEntry);
       state.companies = makeCompanyList(state.entries);

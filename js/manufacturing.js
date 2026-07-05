@@ -1,5 +1,6 @@
+import { getManufacturingJobs } from './jobs-db.js';
+
 (() => {
-    const DATA_URL = 'data/manufacturing-jobs.json';
     const THEME_KEY = 'jb-theme';
     const PAGE_SIZE = 9;
 
@@ -153,7 +154,7 @@
 
     async function loadData(){
       try{
-          const j = await fetchWithCache(DATA_URL, 'jb-cache-manufacturing');
+          const j = await getManufacturingJobs();
           state.jobs = (Array.isArray(j)?j:j.jobs||[]).map((job, idx) => normalize(job, idx));
           state.filtered = state.jobs.slice(); renderSidebarFilters(); renderHeroCategories(); sortFiltered(); renderJobs(); updateResultCount(); updateActiveFilters(); updateStats();
           syncBookmarkButtons(); updateSavedCount();

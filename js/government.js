@@ -1,7 +1,7 @@
+import { getGovernmentJobs } from './jobs-db.js';
+
 (() => {
   'use strict';
-
-  const DATA_URL = 'data/government-jobs.json';
   const PAGE_SIZE = 9;
   const state = {
     organizations: [],
@@ -59,7 +59,7 @@
     restorePreferences();
     bindEvents();
     try {
-      const data = await fetchWithCache(DATA_URL, 'jb-cache-government');
+      const data = await getGovernmentJobs();
       state.organizations = Array.isArray(data.organizations) ? data.organizations : [];
       state.categories = data.categories || [];
       state.resources = data.resources || [];
