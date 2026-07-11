@@ -20,62 +20,46 @@
   --radius: 22px;
   --shell: 1180px;
   --logo-scale-factor: 3.82;
-  --splash-logo-size: 180px;
-  --splash-container-size: 220px;
-  --splash-glow-ring-size: 200px;
-  --splash-title-font-size: 3.2rem;
-  --splash-tagline-font-size: 1.15rem;
-  --splash-loader-width: 260px;
+  --splash-logo-size: clamp(130px, 10vw, 140px);
+  --splash-container-size: calc(var(--splash-logo-size) * 1.35);
+  --splash-glow-ring-size: calc(var(--splash-logo-size) * 1.2);
+  --splash-title-font-size: clamp(2.6rem, 4vw, 3.0rem);
+  --splash-tagline-font-size: clamp(1.05rem, 1.5vw, 1.15rem);
+  --splash-loader-width: clamp(220px, 15vw, 260px);
   --splash-loader-height: 6px;
   --splash-ambient-glow-size: 600px;
 }
 
 @media (max-width: 1199px) {
   :root {
-    --splash-logo-size: 160px;
-    --splash-container-size: 200px;
-    --splash-glow-ring-size: 180px;
-    --splash-title-font-size: 2.8rem;
-    --splash-tagline-font-size: 1.1rem;
-    --splash-loader-width: 240px;
+    --splash-logo-size: clamp(110px, 11vw, 125px);
+    --splash-title-font-size: clamp(2.3rem, 5vw, 2.6rem);
+    --splash-tagline-font-size: clamp(0.95rem, 2vw, 1.05rem);
+    --splash-loader-width: clamp(210px, 20vw, 220px);
+    --splash-loader-height: 5px;
     --splash-ambient-glow-size: 520px;
   }
 }
 
 @media (max-width: 991px) {
   :root {
-    --splash-logo-size: 100px;
-    --splash-container-size: 140px;
-    --splash-glow-ring-size: 120px;
-    --splash-title-font-size: 2.2rem;
-    --splash-tagline-font-size: 0.95rem;
-    --splash-loader-width: 210px;
+    --splash-logo-size: clamp(96px, 12vw, 110px);
+    --splash-title-font-size: clamp(2.0rem, 6vw, 2.3rem);
+    --splash-tagline-font-size: clamp(0.88rem, 3vw, 0.95rem);
+    --splash-loader-width: clamp(190px, 25vw, 210px);
+    --splash-loader-height: 5px;
     --splash-ambient-glow-size: 400px;
   }
 }
 
 @media (max-width: 767px) {
   :root {
-    --splash-logo-size: 80px;
-    --splash-container-size: 110px;
-    --splash-glow-ring-size: 96px;
-    --splash-title-font-size: 28px;
-    --splash-tagline-font-size: 14px;
-    --splash-loader-width: 180px;
+    --splash-logo-size: clamp(72px, 10vw, 88px);
+    --splash-title-font-size: clamp(1.6rem, 7vw, 1.85rem);
+    --splash-tagline-font-size: clamp(0.8rem, 3.5vw, 0.88rem);
+    --splash-loader-width: clamp(170px, 45vw, 180px);
     --splash-loader-height: 4px;
     --splash-ambient-glow-size: 300px;
-  }
-}
-
-@media (max-width: 360px) {
-  :root {
-    --splash-logo-size: 72px;
-    --splash-container-size: 100px;
-    --splash-glow-ring-size: 86px;
-    --splash-title-font-size: 26px;
-    --splash-tagline-font-size: 13px;
-    --splash-loader-width: 170px;
-    --splash-ambient-glow-size: 260px;
   }
 }
 
@@ -1498,7 +1482,7 @@ img { max-width: 100%; }
   width: var(--splash-container-size);
   height: var(--splash-container-size);
   opacity: 0;
-  transform: scale(0.75);
+  transform: scale(0.85);
   animation: 
     logoReveal 0.8s ease-in-out 0.2s forwards,
     logoScaleUpAtEnd 0.4s ease-in-out 2.6s forwards;
@@ -1657,7 +1641,7 @@ img { max-width: 100%; }
 @keyframes logoReveal {
   0% {
     opacity: 0;
-    transform: scale(0.75);
+    transform: scale(0.85);
   }
   100% {
     opacity: 1;

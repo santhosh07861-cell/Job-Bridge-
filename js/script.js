@@ -23,6 +23,22 @@ document.addEventListener('DOMContentLoaded', () => {
   init();
 
   async function init() {
+    // Clear legacy service workers and caches to force fresh asset downloads
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for (let registration of registrations) {
+          registration.unregister();
+        }
+      });
+    }
+    if ('caches' in window) {
+      caches.keys().then(function(names) {
+        for (let name of names) {
+          caches.delete(name);
+        }
+      });
+    }
+
     applyTheme(state.theme);
     // bindNavigation(); // Centralized in auth.js to prevent duplicate event listeners
     bindHeaderScroll();
