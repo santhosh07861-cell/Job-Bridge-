@@ -19,6 +19,64 @@
   --sm-shadow: 0 14px 36px rgba(0, 0, 0, 0.26);
   --radius: 22px;
   --shell: 1180px;
+  --logo-scale-factor: 3.82;
+  --splash-logo-size: 180px;
+  --splash-container-size: 220px;
+  --splash-glow-ring-size: 200px;
+  --splash-title-font-size: 3.2rem;
+  --splash-tagline-font-size: 1.15rem;
+  --splash-loader-width: 260px;
+  --splash-loader-height: 6px;
+  --splash-ambient-glow-size: 600px;
+}
+
+@media (max-width: 1199px) {
+  :root {
+    --splash-logo-size: 160px;
+    --splash-container-size: 200px;
+    --splash-glow-ring-size: 180px;
+    --splash-title-font-size: 2.8rem;
+    --splash-tagline-font-size: 1.1rem;
+    --splash-loader-width: 240px;
+    --splash-ambient-glow-size: 520px;
+  }
+}
+
+@media (max-width: 991px) {
+  :root {
+    --splash-logo-size: 100px;
+    --splash-container-size: 140px;
+    --splash-glow-ring-size: 120px;
+    --splash-title-font-size: 2.2rem;
+    --splash-tagline-font-size: 0.95rem;
+    --splash-loader-width: 210px;
+    --splash-ambient-glow-size: 400px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --splash-logo-size: 80px;
+    --splash-container-size: 110px;
+    --splash-glow-ring-size: 96px;
+    --splash-title-font-size: 28px;
+    --splash-tagline-font-size: 14px;
+    --splash-loader-width: 180px;
+    --splash-loader-height: 4px;
+    --splash-ambient-glow-size: 300px;
+  }
+}
+
+@media (max-width: 360px) {
+  :root {
+    --splash-logo-size: 72px;
+    --splash-container-size: 100px;
+    --splash-glow-ring-size: 86px;
+    --splash-title-font-size: 26px;
+    --splash-tagline-font-size: 13px;
+    --splash-loader-width: 170px;
+    --splash-ambient-glow-size: 260px;
+  }
 }
 
 [data-theme="light"] {
@@ -151,11 +209,14 @@ img { max-width: 100%; }
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-weight: 900;
   letter-spacing: 0;
   animation: brandEnter 0.7s ease both;
   transition: filter 0.24s ease, transform 0.24s ease;
+  text-decoration: none;
+  padding: 0;
+  margin: 0;
 }
 
 .site-header {
@@ -1379,12 +1440,40 @@ img { max-width: 100%; }
   display: grid;
   place-items: center;
   overflow: hidden;
-  background: #070a14;
-  transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.8s ease;
+  background: #050505;
+  transition: 
+    opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
+    filter 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
+    transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), 
+    visibility 0.6s ease;
+  transform: scale(1);
+  filter: blur(0px);
+}
+
+.splash::before {
+  content: '';
+  position: absolute;
+  width: var(--splash-ambient-glow-size);
+  height: var(--splash-ambient-glow-size);
+  background: radial-gradient(circle, rgba(251, 91, 35, 0.11) 0%, transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+  animation: ambientGlowFadeIn 1.5s ease-in-out forwards, ambientPulse 3s ease-in-out infinite alternate 1.5s;
+}
+
+.splash-particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
 }
 
 .splash.is-hidden {
   opacity: 0;
+  filter: blur(20px);
+  transform: scale(0.92);
   visibility: hidden;
 }
 
@@ -1395,93 +1484,232 @@ img { max-width: 100%; }
   align-items: center;
   justify-content: center;
   text-align: center;
+  z-index: 2;
+  width: 100%;
+  max-width: 600px;
+  padding: 0 24px;
 }
 
 .splash-logo-container {
-  opacity: 0;
-  transform: scale(0.85);
-  animation: logoReveal 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards, logoGlow 2.5s ease-in-out infinite alternate;
-  filter: drop-shadow(0 0 24px rgba(251, 91, 35, 0.3));
-}
-
-.splash-logo-img {
-  width: 140px;
-  height: 140px;
-  object-fit: contain;
-  border-radius: 28px;
-}
-
-.splash-tagline {
-  margin-top: 28px;
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  width: var(--splash-container-size);
+  height: var(--splash-container-size);
   opacity: 0;
-  transform: translateY(10px);
-  animation: taglineReveal 1.0s cubic-bezier(0.16, 1, 0.3, 1) 1.5s forwards;
+  transform: scale(0.75);
+  animation: 
+    logoReveal 0.8s ease-in-out 0.2s forwards,
+    logoScaleUpAtEnd 0.4s ease-in-out 2.6s forwards;
+  max-height: 18vh; /* Ensure the logo container never exceeds 18% of view height on any screen */
+}
+
+.splash-glow-ring {
+  position: absolute;
+  width: var(--splash-glow-ring-size);
+  height: var(--splash-glow-ring-size);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(251, 91, 35, 0.15) 0%, transparent 75%);
+  border: 1px solid rgba(251, 91, 35, 0.1);
+  box-shadow: 0 0 20px rgba(251, 91, 35, 0.12), inset 0 0 10px rgba(251, 91, 35, 0.08);
+  opacity: 0;
+  transform: scale(0.85);
+  animation: ringReveal 0.9s ease-in-out 0.3s forwards, ringPulse 2.5s ease-in-out infinite alternate 1.2s;
+}
+
+.splash-logo-wrapper {
+  width: var(--splash-logo-size);
+  height: var(--splash-logo-size);
+  overflow: hidden;
+  position: relative;
+  border-radius: calc(var(--splash-logo-size) * 0.2);
+  z-index: 2;
+}
+
+.splash-logo-wrapper .splash-logo-img {
+  position: absolute;
+  width: calc(var(--splash-logo-size) * var(--logo-scale-factor)) !important;
+  height: calc(var(--splash-logo-size) * var(--logo-scale-factor)) !important;
+  max-width: none !important;
+  left: 50%;
+  top: calc(var(--splash-logo-size) * var(--logo-scale-factor) * -0.2324) !important;
+  transform: translateX(-50%) !important;
+  border-radius: 0;
+  box-shadow: none;
+  object-fit: cover;
+  background: transparent;
+}
+
+.logo-float {
+  animation: logoFloat 2.5s ease-in-out infinite alternate 1.0s;
+}
+
+/* Typography Reveal Animations */
+.splash-title {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+  gap: 1px;
+}
+
+.splash-title span {
+  font-size: var(--splash-title-font-size);
+  font-weight: 500; /* Medium font weight */
+  color: #ffffff;
+  letter-spacing: 0.8px; /* Proper letter spacing */
+  opacity: 0;
+  transform: translateY(8px);
+  animation: letterReveal 0.4s ease-in-out forwards;
+}
+
+/* Sequential Letter Reveal Delays - Starts after logo fade-in settles */
+.splash-title span:nth-child(1) { animation-delay: 0.80s; }
+.splash-title span:nth-child(2) { animation-delay: 0.86s; }
+.splash-title span:nth-child(3) { animation-delay: 0.92s; }
+.splash-title span:nth-child(4) { animation-delay: 0.98s; }
+.splash-title span:nth-child(5) { animation-delay: 1.04s; }
+.splash-title span:nth-child(6) { animation-delay: 1.10s; }
+.splash-title span:nth-child(7) { animation-delay: 1.16s; }
+.splash-title span:nth-child(8) { animation-delay: 1.22s; }
+.splash-title span:nth-child(9) { animation-delay: 1.28s; }
+
+.splash-tagline {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: taglineReveal 0.8s ease-in-out 1.4s forwards;
 }
 
 .splash-tagline span {
-  font-size: 1.15rem;
-  font-weight: 650;
-  color: #f8fafc;
-  letter-spacing: 0.5px;
+  font-size: var(--splash-tagline-font-size);
+  font-weight: 500; /* Medium font weight */
+  color: #94a3b8;
+  letter-spacing: 0.4px;
 }
 
 .splash-tagline .dot {
-  color: #f97316;
+  color: #fb5b23;
 }
 
-/* Premium Progress Bar Loader */
+/* Premium Shimmer Progress Bar Loader */
 .splash-loader-container {
-  width: 220px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 6px;
-  margin-top: 36px;
+  width: var(--splash-loader-width);
+  height: var(--splash-loader-height);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  margin-top: 40px;
   overflow: hidden;
-  opacity: 0;
-  transform: translateY(10px);
-  animation: taglineReveal 1.0s cubic-bezier(0.16, 1, 0.3, 1) 1.6s forwards;
   position: relative;
+  opacity: 0;
+  animation: loaderFadeIn 0.5s ease-in-out 0.4s forwards, loaderFadeOut 0.3s ease-in-out 2.6s forwards;
 }
 
 .splash-loader-progress {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #fb5b23, #ff8a50, #fb5b23);
-  background-size: 200% 100%;
-  border-radius: 6px;
-  box-shadow: 0 0 12px rgba(251, 91, 35, 0.7);
-  animation: progressAnimation 2.2s cubic-bezier(0.4, 0, 0.2, 1) 1.2s forwards;
+  background: linear-gradient(90deg, #f43f5e, #fb5b23, #f59e0b);
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(251, 91, 35, 0.5), 0 0 4px rgba(244, 63, 94, 0.3);
+  position: relative;
+  animation: progressAnimation 2.2s ease-in-out 0.4s forwards;
+}
+
+/* Shimmer shine glint effect */
+.splash-loader-progress::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: loaderShine 1.5s infinite linear;
+}
+
+/* Keyframe animations */
+@keyframes ambientGlowFadeIn {
+  to {
+    opacity: 1;
+    transform: scale(1.0);
+  }
+}
+
+@keyframes ambientPulse {
+  0% {
+    opacity: 1;
+    transform: scale(1.0);
+  }
+  100% {
+    opacity: 1.35;
+    transform: scale(1.15);
+  }
 }
 
 @keyframes logoReveal {
   0% {
     opacity: 0;
-    transform: scale(0.7) translateY(0);
-    filter: drop-shadow(0 0 0px rgba(251, 91, 35, 0));
+    transform: scale(0.75);
   }
   100% {
     opacity: 1;
-    transform: scale(1) translateY(-10px);
-    filter: drop-shadow(0 0 28px rgba(251, 91, 35, 0.45));
+    transform: scale(1.0);
   }
 }
 
-@keyframes logoGlow {
+@keyframes logoScaleUpAtEnd {
+  to {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 30px rgba(251, 91, 35, 0.65));
+  }
+}
+
+@keyframes ringReveal {
+  to {
+    opacity: 1;
+    transform: scale(1.0);
+  }
+}
+
+@keyframes ringPulse {
   0% {
-    filter: drop-shadow(0 0 20px rgba(251, 91, 35, 0.35));
+    transform: scale(1.0);
+    box-shadow: 0 0 20px rgba(251, 91, 35, 0.12), inset 0 0 10px rgba(251, 91, 35, 0.08);
   }
   100% {
-    filter: drop-shadow(0 0 40px rgba(251, 91, 35, 0.75));
+    transform: scale(1.12);
+    box-shadow: 0 0 40px rgba(251, 91, 35, 0.3), inset 0 0 20px rgba(251, 91, 35, 0.18);
+  }
+}
+
+@keyframes logoFloat {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes letterReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 @keyframes taglineReveal {
   0% {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(12px);
   }
   100% {
     opacity: 1;
@@ -1489,37 +1717,73 @@ img { max-width: 100%; }
   }
 }
 
-@keyframes progressAnimation {
-  0% {
-    width: 0%;
-  }
-  30% {
-    width: 25%;
-  }
-  60% {
-    width: 70%;
-  }
-  90% {
-    width: 95%;
-  }
-  100% {
-    width: 100%;
+@keyframes loaderFadeIn {
+  to {
+    opacity: 1;
   }
 }
 
-/* Brand logo styling for navigation and footers */
+@keyframes loaderFadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes progressAnimation {
+  0% { width: 0%; }
+  30% { width: 35%; }
+  60% { width: 75%; }
+  90% { width: 98%; }
+  100% { width: 100%; }
+}
+
+@keyframes loaderShine {
+  0% { transform: translateX(-60px); }
+  100% { transform: translateX(240px); }
+}
+
+/* Scoped Homepage Fade-In Animation when Splash screen is present */
+body:has(#splash-screen) #main,
+body:has(#splash-screen) .site-header {
+  opacity: 0;
+  animation: homePageFadeIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) 2.4s forwards;
+}
+
+@keyframes homePageFadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Brand logo styling for navigation and footers - matches Government Jobs page styling */
 .brand-logo-img {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(251, 91, 35, 0.2);
-  transition: transform 0.24s ease, box-shadow 0.24s ease;
+  width: 48px !important;
+  height: 48px !important;
+  object-fit: contain !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 12px rgba(251, 91, 35, 0.25) !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+  display: inline-block;
+  flex-shrink: 0;
 }
 
 .brand:hover .brand-logo-img {
-  transform: scale(1.08);
-  box-shadow: 0 4px 18px rgba(251, 91, 35, 0.4);
+  transform: scale(1.08) !important;
+  box-shadow: 0 6px 20px rgba(251, 91, 35, 0.45) !important;
+}
+
+@media (max-width: 768px) {
+  .brand-logo-img {
+    width: 44px !important;
+    height: 44px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-logo-img {
+    width: 40px !important;
+    height: 40px !important;
+  }
 }
 
 .page-transition {

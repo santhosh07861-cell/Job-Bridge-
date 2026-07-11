@@ -54,11 +54,80 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    const stopParticles = initSplashParticles();
+
     window.setTimeout(() => {
       splash.classList.add('is-hidden');
       sessionStorage.setItem(SPLASH_KEY, '1');
-      window.setTimeout(() => splash.remove(), 800); // 800ms fade-out transition
-    }, 3500); // 3500ms total splash screen animation time
+      window.setTimeout(() => {
+        splash.remove();
+        if (stopParticles) stopParticles();
+      }, 600); // 600ms fade-out transition
+    }, 2600); // 2600ms total splash screen animation time
+  }
+
+  function initSplashParticles() {
+    const canvas = document.getElementById('splash-particles');
+    if (!canvas) return null;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return null;
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    const handleResize = () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', handleResize);
+
+    const particles = [];
+    const isMobile = window.innerWidth <= 767;
+    const particleCount = isMobile ? 25 : 45;
+    const radiusBase = isMobile ? 0.4 : 0.6;
+    const radiusMultiplier = isMobile ? 1.0 : 1.6;
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: Math.random() * radiusMultiplier + radiusBase,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        alpha: Math.random() * 0.5 + 0.2
+      });
+    }
+
+    let active = true;
+    function animate() {
+      if (!active) return;
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < particleCount; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0) p.x = width;
+        if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+        if (p.y > height) p.y = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(251, 91, 35, ${p.alpha})`;
+        ctx.fill();
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    return () => {
+      active = false;
+      window.removeEventListener('resize', handleResize);
+    };
   }
 
   function bindNavigation() {
